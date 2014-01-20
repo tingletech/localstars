@@ -1,0 +1,7 @@
+{ 
+  "name": "localstars",
+  "version": "0.0.1",
+  "dependencies": {
+    "store.js":"latest"
+  }
+}
