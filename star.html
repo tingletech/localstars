@@ -5,7 +5,7 @@
     <meta charset="utf-8"></meta>
   </head>
   <body>
-    <h1 data-localstars="ark:/99999/9999">Hey, give me a star!</h1>
+    <h1 data-localstar>Hey, give me a star!</h1>
     <div>body</div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
@@ -15,27 +15,20 @@
 // http://stackoverflow.com/questions/899812/best-practices-for-writing-javascript-widgets
 
 (function() {
-    //Your code goes in here
-    // Shorthand for $( document ).ready()
     $(function() {
-        var localstars = $('*[data-localstars]');
-        localstars.each(function() {
-            var key = $(this).data('localstars');
-            key = "localstars." + key;
-            // add in a star
-            var star = $('<fieldset class="rating"> <input type="checkbox" id="star" name="rating" /><label for="star" title="save to list">★ </label> </fieldset>');
-            $('body').append(star);
-            $('#star').on('change', function(){
-                if($(this).is(':checked')){
-                    store.set(key, 'True');
-                } else {
-                    store.remove(key);
-                }
-            });
-            // check if this key has been saved to the localstars list
-            if (store.get(key)) {
-                // change css status so the star is checked
-                $('#star').prop('checked', true);
+        var key = window.location.pathname;
+        key = "localstars." + key;
+        var star = $('<fieldset class="rating"> <input type="checkbox" id="star" name="rating" /><label for="star" title="save to list">★ </label> </fieldset>');
+        $('body').append(star);
+        if (store.get(key)) {
+            $('#star').prop('checked', true);
+        }
+        $('body').append(star);
+        $('#star').on('change', function(){
+            if($(this).is(':checked') && !store.get(key)){
+                store.set(key, 'True');
+            } else {
+                store.remove(key);
             }
         });
     });
