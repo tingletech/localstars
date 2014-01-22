@@ -14,23 +14,24 @@
     <script>
 // http://stackoverflow.com/questions/899812/best-practices-for-writing-javascript-widgets
 
-(function() {
+(function() {		// is `(function() {\n    $(function() {` redundant?
     $(function() {
-        var key = window.location.pathname;
-        key = "localstars." + key;
-        var star = $('<fieldset class="rating"> <input type="checkbox" id="star" name="rating" /><label for="star" title="save to list">★ </label> </fieldset>');
-        $('body').append(star);
-        if (store.get(key)) {
-            $('#star').prop('checked', true);
-        }
-        $('body').append(star);
-        $('#star').on('change', function(){
-            if($(this).is(':checked') && !store.get(key)){
-                store.set(key, 'True');
-            } else {
-                store.remove(key);
+        if (store.enabled) {			// only run if local storage is enabled
+            var key = window.location.pathname;		// (use full URL in iframe version)
+            key = "localstars." + key;			// prefix the localstorage key
+            var star = $('<fieldset class="rating"><input type="checkbox" id="star" name="rating"/><label for="star" title="save to list">★ </label></fieldset>');
+            $('body').append(star);			// display the star
+            if (store.get(key)) {			// check if the star should be checked
+                $('#star').prop('checked', true);
             }
-        });
+            $('#star').on('change', function(){         // bind storage key management function to change event
+                if($(this).is(':checked') && !store.get(key)){
+                    store.set(key, 'True')			// (should store metadata, at least label)
+                } else {
+                    store.remove(key);
+                }
+            });
+        }
     });
 })();
     </script>
