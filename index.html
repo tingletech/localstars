@@ -1,0 +1,39 @@
+<!DOCTYPE html
+  PUBLIC "" "">
+<html lang="en">
+  <head>
+    <meta charset="utf-8"></meta>
+  </head>
+  <body>
+    <h1 data-localstar>Hey, give me a star!</h1>
+    <div>body</div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="bower_components/jquery/jquery.min.js"><\/script>')</script>
+    <script src="bower_components/store.js/store.min.js"></script>
+    <link rel="stylesheet" media="screen" type="text/css" href="star.css"/>
+    <script>
+// http://stackoverflow.com/questions/899812/best-practices-for-writing-javascript-widgets
+
+(function() {		// is `(function() {\n    $(function() {` redundant?
+    $(function() {
+        if (store.enabled) {			// only run if local storage is enabled
+            var key = window.location.pathname;		// (use full URL in iframe version)
+            key = "localstars." + key;			// prefix the localstorage key
+            var star = $('<fieldset class="rating"><input type="checkbox" id="star" name="rating"/><label for="star" title="save to list">★ </label></fieldset>');
+            $('body').append(star);			// display the star
+            if (store.get(key)) {			// check if the star should be checked
+                $('#star').prop('checked', true);
+            }
+            $('#star').on('change', function(){         // bind storage key management function to change event
+                if($(this).is(':checked') && !store.get(key)){
+                    store.set(key, 'True')			// (should store metadata, at least label)
+                } else {
+                    store.remove(key);
+                }
+            });
+        }
+    });
+})();
+    </script>
+  </body>
+</html>
