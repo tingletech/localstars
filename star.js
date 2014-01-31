@@ -4,12 +4,17 @@
         if (store.enabled) {
             var key = window.location.pathname;
             key = "localstars." + key;
-            var star = $('<fieldset class="rating"><input type="checkbox" id="star" name="rating"/><label for="star" title="save to list">★ </label></fieldset>');
-            $('body').append(star);
+            var starable = $('h1')[0];
+            var fieldset = $('<fieldset class="rating"/>');
+            var input = $('<input type="checkbox" id="localstar" name="localstar"/>');
+            var label = $('<label for="localstar" title="save to list">★ </label>');
+            $(fieldset).append(input);
+            $(fieldset).append(label);
+            $(starable).append(fieldset);
             if (store.get(key)) {
-                $('#star').prop('checked', true);
+                $(input).prop('checked', true);
             }
-            $('#star').on('change', function(){
+            $(input).on('change', function(){
                 if($(this).is(':checked') && !store.get(key)){
                     store.set(key, 'True')
                 } else {

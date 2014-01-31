@@ -4,10 +4,10 @@
 
 .rating {
     border-style: none;
-    position: absolute;
-    top: 1.5em;
-    right: 1.5em;
-}
+    display: inline;
+    padding: 0;
+    margin-bottom: -0.25em;
+} 
 
 /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
    follow these rules. Every browser that supports :checked also supports :not(), so
@@ -25,8 +25,8 @@
     overflow:hidden;
     white-space:nowrap;
     cursor:pointer;
-    font-size:200%;
-    line-height:1.2;
+    /* font-size:200%;
+    line-height:1.2; */
     color:#ddd;
     text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
 }
