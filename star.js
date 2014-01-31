@@ -1,18 +1,24 @@
-<!DOCTYPE html
-  PUBLIC "" "">
-<html lang="en">
-  <head>
-    <meta charset="utf-8"></meta>
-  </head>
-  <body>
-    <h1 data-localstar>Hey, give me a star!</h1>
-    <div>body</div>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="bower_components/jquery/jquery.min.js"><\/script>')</script>
-    <script src="bower_components/store.js/store.min.js"></script>
-    <link rel="stylesheet" media="screen" type="text/css" href="star.css"/>
-    <script src="star.js"></script>
-<!-- 
+// http://stackoverflow.com/questions/899812/best-practices-for-writing-javascript-widgets
+(function() {
+    $(function() {
+        if (store.enabled) {
+            var key = window.location.pathname;
+            key = "localstars." + key;
+            var star = $('<fieldset class="rating"><input type="checkbox" id="star" name="rating"/><label for="star" title="save to list">★ </label></fieldset>');
+            $('body').append(star);
+            if (store.get(key)) {
+                $('#star').prop('checked', true);
+            }
+            $('#star').on('change', function(){
+                if($(this).is(':checked') && !store.get(key)){
+                    store.set(key, 'True')
+                } else {
+                    store.remove(key);
+                }
+            });
+        }
+    });
+})();
 /* # License 
 
 Copyright © 2014, Regents of the University of California
@@ -40,6 +46,4 @@ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
 INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
 CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-POSSIBILITY OF SUCH DAMAGE. */ -->
-  </body>
-</html>
+POSSIBILITY OF SUCH DAMAGE. */
